@@ -1,0 +1,274 @@
+---
+title: "Introduction to R"
+date: "`r format(Sys.Date(), '%d / %m / %Y')`"
+output: html_notebook
+---
+
+This is a brief introduction to [R](https://www.r-project.org/). This beautiful document was made using [R Markdown](http://rmarkdown.rstudio.com). If you would like to check the topics around this type of *R Markdown* document, please visit the [R Notebooks](https://rmarkdown.rstudio.com/r_notebooks.html) website.
+
+***
+
+# Workshop goal
+
+The aim of this study group is to help you get started learning some of the basic tools which will allow you to do data transformation in *R*.
+
+# What will you learn?
+
+We will briefly discuss the essential data structures in base *R*. Then, we are going to focus on the *dplyr* package.
+
+One important point to mention, we will emphasize on **small data**! If you wish to know the basic tools for working with **big data** in *R*, we recommend you to discover the [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) package, for instance.
+
+# Requisites
+
+We need to load and attach some add-on packages to the user's workspace.
+
+* Note:
+
+    The *R* base package is already loaded and attached to the global environment, by default!
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(rmarkdown)
+```
+
+***
+
+# Data structures
+
+The first section of this introductory *R* course is based on the book [Advanced R](http://adv-r.had.co.nz/), which is authored by [Hadley Wickham](http://hadley.nz/). We encourage anyone interested in *computer science* to explore this insightful referenced material.
+
+## Vectors
+
+The vector is the basic data structure in *R*. A vector has three common properties: **type** (*what is it?*), **length** (*how many elements does it contain?*), and **attributes** (*metadata*). There are two types of vectors in *R*:
+
+* Atomic vectors.
+* Lists.
+
+### Atomic vectors
+
+Atomic vectors are *homogeneous* vectors, i.e. all the elements of an atomic vector must have the same type.
+
+We observe four common types of atomic vectors: **character**, **double** *(which is also known as **numeric**)*, **integer**, and **logical**. Additionally, we observe two rare types of atomic vectors: **complex**, and **raw**.
+
+#### Examples
+
+```{r}
+charter <- c("I love R!")
+do_nu <- c(exp(1), pi)
+inter <- c(-2L, -1L, 0L, 1L, 2L)
+logia <- c(FALSE, TRUE, F, T)
+```
+
+### Lists
+
+Lists are *heterogeneous* vectors, i.e. the elements of a list could have different types. For instance:
+
+```{r}
+R_workshop_students_info <- list(
+  Name = c("Adrian", "Asia", "Hugo", "Magdalena"),
+  Age = c(21, 23, 25, 22, 50),
+  `Do you love R?` = c(TRUE, TRUE, TRUE, FALSE),
+  Year = c(0L, 1L, 2L, 3L, 1L)
+)
+```
+
+## Attributes
+
+### What is metadata?
+
+[Metadata](https://en.oxforddictionaries.com/definition/metadata) is a set of data which describes and gives information about a set of data.
+
+In summary, the following three items are the most important attributes in *R*:
+
+* Names.
+* Dimensions.
+* Class.
+
+## Matrices and arrays
+
+Now, we will consider the multi-dimensional atomic vectors.
+
+```{r}
+mix <- matrix(1:32, nrow = 8, ncol = 4)
+a_ray <- array(1:32, dim = c(4, 2, 4))
+```
+
+## Data frames
+
+A data frame is basically a list which is composed of fixed-length atomic vectors.
+
+```{r}
+R_workshop_students_info <- data.frame(stringsAsFactors = FALSE,
+  Name = c("Adrian", "Asia", "Hugo", "Magdalena"),
+  Age = c(21, 23, 25, 22),
+  `Do you love R?` = c(TRUE, TRUE, TRUE, FALSE),
+  Year = c(1L, 2L, 3L, 1L),
+  City = c("Gdańsk", "Katowice", "Kraków", "Warszawa")
+)
+print(R_workshop_students_info)
+rownames(R_workshop_students_info)
+colnames(R_workshop_students_info) # names(R_workshop_students_info)
+nrow(R_workshop_students_info)
+ncol(R_workshop_students_info) # length(R_workshop_students_info)
+dim(R_workshop_students_info)
+```
+
+***
+
+# Data transformation
+
+The last section of this introductory *R* course is based on the book [R for Data Science](http://r4ds.had.co.nz/), which is authored by [Garrett Grolemund](https://github.com/garrettgman) and [Hadley Wickham](http://hadley.nz/). We encourage anyone interested in *data science* to explore this insightful referenced material.
+
+* Requisites
+
+    We will use the database included in the *nycflights13* package.
+
+```{r}
+library(nycflights13)
+View(flights)
+```
+
+## The `dplyr` package
+
+We will defy our data transformation challenges in *R* using five key `dplyr` functions: `filter()`, `arrange()`, `select()`, `mutate()`, and `summarise()` (*which is also called `summarize()`*). All of these items can be used together with `group_by()`, which is another key `dplyr` function.
+
+The previuosly mentioned key `dplyr` functions form the set of *"verbs for a language of data manipulation"*, in words of [Hadley Wickham](http://hadley.nz/).
+
+All verbs work as follows:
+
+* The first function argument is a data frame.
+* The successive function arguments describe the way in which we will manipulate the input data frame by using the input data frame variable names.
+* The output data frame is the result of the input data frame manipulation/transformation.
+
+### <span style = "color : Crimson">Verb `filter()`</span>
+
+#### <span style = "color : DarkCyan">Example</span>
+
+```{r}
+fe_se <- filter(flights, month == 2, day == 2)
+```
+
+#### <span style = "color : DarkCyan">Practice</span>
+
+```{r}
+# (A) Filter the data frame "flights" by the following months of departure: October, and November.
+
+# (B) The data frame "flights" should not include the following months of departure: March, April, and December.
+
+# (C) Filter the data frame "flights" by arrival delay greater than 90 minutes.
+
+```
+
+### <span style = "color : Crimson">Verb `arrange()`</span>
+
+#### <span style = "color : DarkCyan">Example</span>
+
+```{r}
+ye_mo_da_as <- arrange(flights, year, month, day)
+ye_mo_da_de <- arrange(flights, desc(year), desc(month), desc(day))
+```
+
+#### <span style = "color : DarkCyan">Practice</span>
+
+```{r}
+# The most delayed flights.
+
+# The fastest flights.
+
+```
+
+### <span style = "color : Crimson">Verb `select()`</span>
+
+#### <span style = "color : DarkCyan">Example</span>
+
+```{r}
+ye_mo_da <- select(flights, year, month, day)
+```
+
+#### <span style = "color : DarkCyan">Practice</span>
+
+```{r}
+# Select "origin"" and "destination".
+
+# Exclude "air_time" and "distance".
+
+```
+
+### <span style = "color : Crimson">Verb `mutate()`</span>
+
+#### <span style = "color : DarkCyan">Example</span>
+
+```{r}
+total_delay <- mutate(flights, total_delay = dep_delay + arr_delay)
+# transmute()
+```
+
+#### <span style = "color : DarkCyan">Practice</span>
+
+```{r}
+# Speed (kph).
+
+```
+
+### <span style = "color : Crimson">Verb `summarise()`</span>
+
+#### <span style = "color : DarkCyan">Example</span>
+
+```{r}
+me_dep_del <- summarise(flights, me_dep_del = mean(dep_delay, na.rm = TRUE))
+```
+
+#### <span style = "color : DarkCyan">Practice</span>
+
+```{r}
+# Max distance.
+
+```
+
+### <span style = "color : Crimson">Verb `groub_by()`</span>
+
+#### <span style = "color : DarkCyan">Example</span>
+
+```{r}
+via_den <- group_by(flights, dest)
+ar_del_via_den <-
+  summarise(via_den,
+    count = n(),
+    me_dis = mean(distance, na.rm = TRUE),
+    me_ar_del = mean(arr_delay, na.rm = TRUE)
+  )
+ggplot(data = filter(ar_del_via_den, me_dis < 4500), mapping = aes(x = me_dis, y = me_ar_del)) +
+  geom_point(aes(size = count), alpha = 1/4) +
+  geom_smooth(se = FALSE)
+```
+
+#### <span style = "color : DarkCyan">Practice</span>
+
+```{r}
+# Group by month of departure, count the number of flights, and determine the shortest distance.
+
+```
+
+### <span style = "color : Crimson">The pipe operator (`%>%`) in *R*</span>
+
+#### <span style = "color : DarkCyan">Example</span>
+
+```{r}
+ar_del_via_den <- flights %>% group_by(dest) %>% summarise(count = n(), me_dis = mean(distance, na.rm = TRUE), me_ar_del = mean(arr_delay, na.rm = TRUE))
+```
+
+#### <span style = "color : DarkCyan">Practice</span>
+
+```{r}
+# Select "flight", "air_time" and "distance". Filter NAs from "air_time" and "distance". Arrange by "distance". Group by "flight". Create a new variable which captures the fastest trip for each "flight" element.
+
+# Plot.
+
+```
+
+***
+
+# Thanks a lot!
+
+#### Document created by [Michael Alexander](mailto:michael-alexander.ramirez-sierra@ubs.com)!
