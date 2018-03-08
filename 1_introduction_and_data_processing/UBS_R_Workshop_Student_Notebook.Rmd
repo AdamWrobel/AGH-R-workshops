@@ -29,7 +29,7 @@ We need to load and attach some add-on packages to the user's workspace.
 ```{r}
 library(dplyr)
 library(ggplot2)
-library(rmarkdown)
+library(rmarkdown) # Optional R object!
 ```
 
 ***
@@ -54,10 +54,10 @@ We observe four common types of atomic vectors: **character**, **double** *(whic
 #### Examples
 
 ```{r}
-charter <- c("I love R!")
-do_nu <- c(exp(1), pi)
-inter <- c(-2L, -1L, 0L, 1L, 2L)
-logia <- c(FALSE, TRUE, F, T)
+charter <- c("I love R!"); typeof(charter); length(charter)
+do_nu <- c(exp(1), pi) ; typeof(do_nu); length(do_nu)
+inter <- c(-2L, -1L, 0L, 1L, 2L); typeof(inter); length(inter)
+logia <- c(FALSE, TRUE, F, T); typeof(logia); length(logia)
 ```
 
 ### Lists
@@ -65,12 +65,14 @@ logia <- c(FALSE, TRUE, F, T)
 Lists are *heterogeneous* vectors, i.e. the elements of a list could have different types. For instance:
 
 ```{r}
-R_workshop_students_info <- list(
+extra_students_info <- list(
   Name = c("Adrian", "Asia", "Hugo", "Magdalena"),
   Age = c(21, 23, 25, 22, 50),
   `Do you love R?` = c(TRUE, TRUE, TRUE, FALSE),
   Year = c(0L, 1L, 2L, 3L, 1L)
 )
+typeof(extra_students_info)
+length(extra_students_info)
 ```
 
 ## Attributes
@@ -82,8 +84,28 @@ R_workshop_students_info <- list(
 In summary, the following three items are the most important attributes in *R*:
 
 * Names.
+
+```{r}
+names(charter); names(charter) <- c("Emotion")
+names(do_nu); names(do_nu) <- c("Euler", "Pi")
+names(inter); names(inter) <- c("Minus Two", "Minus One", "Zero", "One", "Two")
+names(logia); names(logia) <- c("False!", "True!", "False!", "True!")
+names(extra_students_info)
+```
+
 * Dimensions.
+
+```{r}
+?dim
+help("dim")
+```
+
 * Class.
+
+```{r}
+?class
+help("class")
+```
 
 ## Matrices and arrays
 
@@ -99,19 +121,19 @@ a_ray <- array(1:32, dim = c(4, 2, 4))
 A data frame is basically a list which is composed of fixed-length atomic vectors.
 
 ```{r}
-R_workshop_students_info <- data.frame(stringsAsFactors = FALSE,
+students_info <- data.frame(stringsAsFactors = FALSE,
   Name = c("Adrian", "Asia", "Hugo", "Magdalena"),
   Age = c(21, 23, 25, 22),
   `Do you love R?` = c(TRUE, TRUE, TRUE, FALSE),
   Year = c(1L, 2L, 3L, 1L),
-  City = c("Gdańsk", "Katowice", "Kraków", "Warszawa")
+  City = c("Katowice", "Cracovia", "Warszawa", "Zakopane")
 )
-print(R_workshop_students_info)
-rownames(R_workshop_students_info)
-colnames(R_workshop_students_info) # names(R_workshop_students_info)
-nrow(R_workshop_students_info)
-ncol(R_workshop_students_info) # length(R_workshop_students_info)
-dim(R_workshop_students_info)
+print(students_info)
+rownames(students_info)
+colnames(students_info) # names(students_info)
+nrow(students_info)
+ncol(students_info) # length(students_info)
+dim(students_info)
 ```
 
 ***
@@ -146,18 +168,18 @@ All verbs work as follows:
 #### <span style = "color : DarkCyan">Example</span>
 
 ```{r}
-fe_se <- filter(flights, month == 2, day == 2)
+fe_se <- filter(flights, month == 2, day == 2) # Find the flights scheduled for February 2.
 ```
 
 #### <span style = "color : DarkCyan">Practice</span>
 
 ```{r}
 # (A) Filter the data frame "flights" by the following months of departure: October, and November.
-
+octo_nob <- filter(flights, month %in% c(10, 11))
 # (B) The data frame "flights" should not include the following months of departure: March, April, and December.
-
+no_mar_ap_deb <- filter(flights, !(month %in% c(3, 4, 12)))
 # (C) Filter the data frame "flights" by arrival delay greater than 90 minutes.
-
+ar_del_90_plus_min <- filter(flights, arr_delay > 90)
 ```
 
 ### <span style = "color : Crimson">Verb `arrange()`</span>
@@ -165,17 +187,17 @@ fe_se <- filter(flights, month == 2, day == 2)
 #### <span style = "color : DarkCyan">Example</span>
 
 ```{r}
-ye_mo_da_as <- arrange(flights, year, month, day)
-ye_mo_da_de <- arrange(flights, desc(year), desc(month), desc(day))
+ye_mo_da_as <- arrange(flights, year, month, day) # Order the data frame "flights" by year, month and day. Ascending order.
+ye_mo_da_de <- arrange(flights, desc(year), desc(month), desc(day)) # Order the data frame "flights" by year, month and day. Descending order.
 ```
 
 #### <span style = "color : DarkCyan">Practice</span>
 
 ```{r}
-# The most delayed flights.
-
-# The fastest flights.
-
+# (A) Find the ten most delayed flights.
+most_del <- arrange(flights, desc(arr_delay))
+# (B) Find the ten fastest flights.
+fast <- arrange(flights, air_time)
 ```
 
 ### <span style = "color : Crimson">Verb `select()`</span>
@@ -183,16 +205,16 @@ ye_mo_da_de <- arrange(flights, desc(year), desc(month), desc(day))
 #### <span style = "color : DarkCyan">Example</span>
 
 ```{r}
-ye_mo_da <- select(flights, year, month, day)
+ye_mo_da <- select(flights, year, month, day) # Extract from the data frame "flights" the following variables: year, month, day.
 ```
 
 #### <span style = "color : DarkCyan">Practice</span>
 
 ```{r}
-# Select "origin"" and "destination".
-
-# Exclude "air_time" and "distance".
-
+# (A) Select "origin"" and "destination".
+in_org_den <- select(flights, origin, dest)
+# (B) Exclude "air_time" and "distance".
+ex_airt_dis <- select(flights, -(air_time & distance))
 ```
 
 ### <span style = "color : Crimson">Verb `mutate()`</span>
@@ -200,15 +222,15 @@ ye_mo_da <- select(flights, year, month, day)
 #### <span style = "color : DarkCyan">Example</span>
 
 ```{r}
-total_delay <- mutate(flights, total_delay = dep_delay + arr_delay)
-# transmute()
+total_delay <- mutate(flights, total_delay = dep_delay + arr_delay) # Create a new variable called "total_delay", which stands for the sum of departure delay and arrival delay.
+?dplyr::transmute
 ```
 
 #### <span style = "color : DarkCyan">Practice</span>
 
 ```{r}
-# Speed (kph).
-
+# (A) Speed (kph).
+speed_kph <- mutate(flights, speed = distance/air_time*60)
 ```
 
 ### <span style = "color : Crimson">Verb `summarise()`</span>
@@ -216,38 +238,39 @@ total_delay <- mutate(flights, total_delay = dep_delay + arr_delay)
 #### <span style = "color : DarkCyan">Example</span>
 
 ```{r}
-me_dep_del <- summarise(flights, me_dep_del = mean(dep_delay, na.rm = TRUE))
+me_dep_del <- summarise(flights, me_dep_del = mean(dep_delay, na.rm = TRUE)) # Calculate the mean value of all the departure delays.
 ```
 
 #### <span style = "color : DarkCyan">Practice</span>
 
 ```{r}
-# Max distance.
-
+# (A) Obtain the max flight distance.
+max_dis <- summarise(flights, max_dis = max(distance, na.rm = TRUE))
 ```
 
 ### <span style = "color : Crimson">Verb `groub_by()`</span>
 
 #### <span style = "color : DarkCyan">Example</span>
 
-```{r}
-via_den <- group_by(flights, dest)
-ar_del_via_den <-
+```{r fig.align = "center"}
+via_den <- group_by(flights, dest) # We will group the data frame "flights" by destination.
+ar_del_via_den <- # We will create a new data frame which contains the following items: the number of flights, the mean value of the distances, and the mean value of the arrival delays.
   summarise(via_den,
-    count = n(),
+    con = n(),
     me_dis = mean(distance, na.rm = TRUE),
     me_ar_del = mean(arr_delay, na.rm = TRUE)
   )
-ggplot(data = filter(ar_del_via_den, me_dis < 4500), mapping = aes(x = me_dis, y = me_ar_del)) +
-  geom_point(aes(size = count), alpha = 1/4) +
+ggplot(data = filter(ar_del_via_den, me_dis < max(me_dis)), mapping = aes(x = me_dis, y = me_ar_del)) + # We will plot the new data frame, except for the largest mean value of the distances.
+  geom_point(aes(size = con), alpha = 1/4) +
   geom_smooth(se = FALSE)
 ```
 
 #### <span style = "color : DarkCyan">Practice</span>
 
 ```{r}
-# Group by month of departure, count the number of flights, and determine the shortest distance.
-
+# (A) Group by month of departure, count the number of flights, and determine the shortest distance.
+via_mo <- group_by(flights, month)
+short_dist <- summarise(via_mo, con = n(), min_dis = min(distance, na.rm = TRUE))
 ```
 
 ### <span style = "color : Crimson">The pipe operator (`%>%`) in *R*</span>
@@ -255,16 +278,26 @@ ggplot(data = filter(ar_del_via_den, me_dis < 4500), mapping = aes(x = me_dis, y
 #### <span style = "color : DarkCyan">Example</span>
 
 ```{r}
-ar_del_via_den <- flights %>% group_by(dest) %>% summarise(count = n(), me_dis = mean(distance, na.rm = TRUE), me_ar_del = mean(arr_delay, na.rm = TRUE))
+ar_del_via_den <- # We will repeat the "group_by()" example, but we will use the pipe operator (%>%) for simplifying the programming syntax.
+  flights %>%
+  group_by(dest) %>%
+  summarise(con = n(), me_dis = mean(distance, na.rm = TRUE), me_ar_del = mean(arr_delay, na.rm = TRUE))
 ```
 
 #### <span style = "color : DarkCyan">Practice</span>
 
 ```{r}
-# Select "flight", "air_time" and "distance". Filter NAs from "air_time" and "distance". Arrange by "distance". Group by "flight". Create a new variable which captures the fastest trip for each "flight" element.
-
-# Plot.
-
+# (A) Select "flight", "air_time" and "distance". Filter NAs from "air_time" and "distance". Create a new variable which captures the trip speed (kph) for each "flight" element. Group by "flight". Find the fastest trip speed for each "flight" element. Extract the top ten fastest trip speeds.
+top_ten_fast_flight_id <-
+  flights %>%
+  select(flight, air_time, distance) %>%
+  filter(!is.na(air_time), !is.na(distance)) %>%
+  mutate(speed = distance/air_time*60) %>%
+  group_by(flight) %>%
+  summarise(fast = max(speed)) %>%
+  arrange(desc(fast)) %>%
+  slice(1:10) %>%
+  View()
 ```
 
 ***
