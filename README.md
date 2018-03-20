@@ -15,7 +15,7 @@ Data Visualization (ggplot2) [PL]
 
 15.03.2018, 19:00
 
-Modelling [PL]
+Modelling - introduction [PL]
 
 20.03.2018, 19:15
 
@@ -26,4 +26,3 @@ Data Processing (reshape2, purrr) [PL]
 27.03.2018, 19:15
 
 05.04.2018, 19:00
-
