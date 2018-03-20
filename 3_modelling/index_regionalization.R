@@ -54,14 +54,7 @@ grid()
 
 # a) stworzyc analogiczny wykres dla Detroit
 summary(model_Detroit)
-plot(y = HPI_wide$MI.Detroit, 
-     x = HPI_wide$National.US, 
-     xlim = c(-0.1,0.1), 
-     ylim = c(-0.1,0.1),
-     pch = 19,
-     main = 'Detroit',cex = 1.2)
-abline(model_Chicago$coefficients, lwd = 2)
-grid()
+
 
 # b) zaaplikowac parametry beta do wyznaczania wartosci zabezpieczenia w stresie 
 # oraz wyznaczy EL po tej zmianie
@@ -71,9 +64,9 @@ betas_df <- data.frame(beta = c(model_Los_Angeles$coefficients[2],
                        city = c('CA.Los.Angeles','MI.Detroit','IL.Chicago'))
 mortgages_results_2 <-
 mortgages %>% left_join(betas_df) %>%
-  mutate(collateral_stress = collateral * (1 - beta * 0.18),
-         LTV_stress = loan_size/collateral_stress,
-         LGD = pnorm(-2.2+1.3*LTV_stress),
+  mutate(collateral_stress = ... * (1 - ... * 0.18),
+         LTV_stress = ...,
+         LGD = pnorm(...),
          EAD = loan_size,
          EL = PD * LGD * loan_size)
 
@@ -88,8 +81,7 @@ mortgages_results_2$EL %>% quantile(c(0.25, 0.5, 0.75, 0.99))
 # mozna rowniez wyfiltrowac po dacie porownujac siê na przyklad z as.Date('2003-01-01')
 
 model_Los_Angeles_new <- 
-  lm(CA.Los.Angeles ~ National.US,data = HPI_wide %>% 
-       filter(Date > as.Date('2011-01-01')))
+  lm())
 
 
 summary(model_Los_Angeles)
