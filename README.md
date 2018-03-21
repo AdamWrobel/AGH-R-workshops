@@ -21,7 +21,7 @@ Modelling - introduction [PL]
 
 22.03.2018, 19:00
 
-Data Processing (reshape2, purrr) [PL]
+Modelling - part 2 [PL]
 
 27.03.2018, 19:15
 
