@@ -42,7 +42,7 @@ Market Risk - VAR model [ENG - Michael]
 
 26.04.2018, 19:00
 
-Risk aggregation - copulas [PL - Adam]
+Risk Aggregation - copulas [PL - Adam]
 
 08.05.2018, 19:15
 
