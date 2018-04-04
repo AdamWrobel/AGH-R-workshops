@@ -1,7 +1,7 @@
 # AGH-R-workshops
 Materials for R workshops hosted by UBS and KNMF (AGH)
 
-R workshops - introduction:
+## R workshops - introduction:
 
 Introduction & Data Processing (dplyr) [ENG - Michael + Adam]:
 
@@ -28,7 +28,7 @@ Modelling - part 2 [PL - Adam]
 05.04.2018, 19:00
 
 
-R workshops - advanced (list of initial topics - to be confirmed):
+## R workshops - advanced (list of initial topics - to be confirmed):
 
 Credit Risk - PD model [PL - Adam]
 
