@@ -48,7 +48,7 @@ Risk aggregation - copulas [PL - Adam]
 
 10.05.2018, 19:00
 
-Other potential topics:
+### Other potential topics:
 
 Valuation models - option pricing 
 
