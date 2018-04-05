@@ -34,13 +34,13 @@ Modelling - part 2 [PL - Adam]
 
 Credit Risk - PD model [PL - Szymon]
 
-18.04.2018, 19:15 (środa)
+17.04.2018, 19:15 (wtorek)
 
 19.04.2018, 19:00 (czwartek)
 
-Market Risk - VAR model [ENG - Michael]
+To be defined
 
-25.04.2018, 19:15 (środa)
+24.04.2018, 19:15 (wtorek)
 
 26.04.2018, 19:00 (czwartek)
 
@@ -50,7 +50,7 @@ Risk Aggregation - copulas [PL - Adam]
 
 10.05.2018, 19:00 (czwartek)
 
-To be defined
+Market Risk - VAR model [ENG - Michael]
 
 15.05.2018, 19:15
 
