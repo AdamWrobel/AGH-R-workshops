@@ -30,25 +30,27 @@ Modelling - part 2 [PL - Adam]
 
 ## R workshops - advanced (list of initial topics - to be confirmed):
 
+17.04.2018, 18:30 - eRka meetup (https://www.meetup.com/erkakrakow/events/249289013/)
+
 Credit Risk - PD model [PL - Szymon]
 
-17.04.2018, 19:15
+18.04.2018, 19:15 (środa)
 
-19.04.2018, 19:00
+19.04.2018, 19:00 (czwartek)
 
-To be defined
+Market Risk - VAR model [ENG - Michael]
 
-24.04.2018, 19:15
+25.04.2018, 19:15 (środa)
 
-26.04.2018, 19:00
+26.04.2018, 19:00 (czwartek)
 
 Risk Aggregation - copulas [PL - Adam]
 
-08.05.2018, 19:15
+08.05.2018, 19:15 (wtorek)
 
-10.05.2018, 19:00
+10.05.2018, 19:00 (czwartek)
 
-Market Risk - VAR model [ENG - Michael]
+To be defined
 
 15.05.2018, 19:15
 
@@ -56,8 +58,8 @@ Market Risk - VAR model [ENG - Michael]
 
 ### Other potential topics:
 
-Valuation models - option pricing 
+Valuation models - option pricing
 
-Credit Risk - Merton model 
+Credit Risk - Merton model
 
 Operational Risk
