@@ -30,13 +30,13 @@ Modelling - part 2 [PL - Adam]
 
 ## R workshops - advanced (list of initial topics - to be confirmed):
 
-Credit Risk - PD model [PL - Adam]
+Credit Risk - PD model [PL - Szymon]
 
 17.04.2018, 19:15
 
 19.04.2018, 19:00
 
-Market Risk - VAR model [ENG - Michael]
+To be defined
 
 24.04.2018, 19:15
 
@@ -47,6 +47,12 @@ Risk Aggregation - copulas [PL - Adam]
 08.05.2018, 19:15
 
 10.05.2018, 19:00
+
+Market Risk - VAR model [ENG - Michael]
+
+15.05.2018, 19:15
+
+17.05.2018, 19:00
 
 ### Other potential topics:
 
