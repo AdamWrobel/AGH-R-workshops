@@ -32,25 +32,25 @@ Materials for R workshops hosted by UBS and KNMF (AGH)
 
 17.04.2018, 18:30 - eRka meetup (https://www.meetup.com/erkakrakow/events/249289013/)
 
-# Credit Risk - PD model [PL - Szymon]
+#### Credit Risk - PD model [PL - Szymon]
 
 17.04.2018, 19:15 (wtorek)
 
 19.04.2018, 19:00 (czwartek)
 
-# Time Series modelling [PL - Adrian]
+### Time Series modelling [PL - Adrian]
 
 24.04.2018, 19:15 (wtorek)
 
 26.04.2018, 19:00 (czwartek)
 
-# Risk Aggregation - copulas [PL - Adam]
+### Risk Aggregation - copulas [PL - Adam]
 
 08.05.2018, 19:15 (wtorek)
 
 10.05.2018, 19:00 (czwartek)
 
-# Market Risk - VAR model [ENG - Michael]
+### Market Risk - VAR model [ENG - Michael]
 
 15.05.2018, 19:15
 
