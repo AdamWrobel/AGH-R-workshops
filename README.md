@@ -3,25 +3,25 @@ Materials for R workshops hosted by UBS and KNMF (AGH)
 
 ## R workshops - introduction:
 
-# Introduction & Data Processing (dplyr) [ENG - Michael + Adam]:
+### Introduction & Data Processing (dplyr) [ENG - Michael + Adam]:
 
 06.03.2018, 19:15
 
 08.03.2018, 19:00
 
-# Data Visualization (ggplot2) [PL - Kamila]
+### Data Visualization (ggplot2) [PL - Kamila]
 
 13.03.2018, 19:15
 
 15.03.2018, 19:00
 
-# Modelling - introduction [PL - Adam]
+### Modelling - introduction [PL - Adam]
 
 20.03.2018, 19:15
 
 22.03.2018, 19:00
 
-# Modelling - part 2 [PL - Adam]
+### Modelling - part 2 [PL - Adam]
 
 27.03.2018, 19:15
 
