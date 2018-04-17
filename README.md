@@ -38,7 +38,7 @@ Credit Risk - PD model [PL - Szymon]
 
 19.04.2018, 19:00 (czwartek)
 
-To be defined
+Time Series modelling [PL - Adrian]
 
 24.04.2018, 19:15 (wtorek)
 
@@ -56,10 +56,3 @@ Market Risk - VAR model [ENG - Michael]
 
 17.05.2018, 19:00
 
-### Other potential topics:
-
-Valuation models - option pricing
-
-Credit Risk - Merton model
-
-Operational Risk
