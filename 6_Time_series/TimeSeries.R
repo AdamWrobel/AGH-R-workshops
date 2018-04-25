@@ -1,67 +1,29 @@
 
-#Time sereis 
+#Time series 
 #Laadowanie potrzebnych bibliotek 
 
 library(dplyr)
 library(ggplot2)
 
 ### Pakiet do analizy kointegracji i diagnostyki szeregow czasowych 
+install.packages(urca)
 library(urca)
+
 ###Pakiet do diagnostyki seasonal unit roots
+install.packages(uroot)
 library(uroot)
 
-library(tseries)
-
 ####Pakiet przydatny do konstukcji modeli ARIMA oraz do prognozowania i diagnostyki prognoz 
+install.packages(forecast)
 library(forecast)
 
 ###Pakiet do modeli VAR
 library(vars)
-#####
 
+##### 
+library(tseries)
 library(timeSeries)
 library(PerformanceAnalytics)
-
-
-
-#Pakiet do bezpoÅ›redniego Å›ciÄ…gania danych z Eurostatu  - Dane zostaly sciagniete za posrednictwem tego pakietyu 
-#library(eurostat)
-
-###Kod do bezposredniego sciagniecia danych z Eurostatu:  
-#Nie bedzie wykonywany na zajeciach (chyba, ze na sam koniec by pokazac jak to fukcjonuje)
-###Sharmonizowany indeks cen konsumenta (HICP)
-#Wykaz wszystkich baz danych Eurostatu w które maja w swojej nazwie HCIP 
-#
-#HICP = search_eurostat(pattern="HICP")
-#
-#Sciagniecie calej bazy danych dla HICP
-#
-#HICP_all <- get_eurostat(as.character("prc_hicp_midx"))
-#
-#
-#####Selekcja jedynie indeksów dla wszystkich dóbr (coicop CP00) dla 2005=100 (unit "I05")
-#Generalnie po kodach COCIOP mozna wybrac indeksy dla bardziej szczególowych kategorii dóbr. 
-#
-#HICP_total <- HICP_all %>% dplyr::filter(coicop =="CP00"& unit == "I05")
-#
-### Wybór indeksu HICP dla wszystkich dórb jedynie dla Polski
-#
-#HICP_PL <- HICP_total%>% filter(geo =="PL")
-#
-#Wybór indeksu HICP dla Polski, Niemiec i Francji 
-#HICP_PL_WE <- HICP_total%>% dplyr::filter(geo =="PL" | geo == "DE"|geo == "FR")
-#
-#
-#write.csv(HICP_PL_WE, "HICP_PL_WE.csv")
-
-
-
-
-
-
-###Sciezke nalezy ustawic wg wlasnych preferncji
-
-setwd("C:/Users/AdrianoB/Desktop/Praca/KursAGH")
 
 
 ###Sciagniacie danych potrzebnych do analizy  - Wskaznik cen konsumenta HICP z Eurostatu dla Polski, Niemec i Francji
@@ -84,11 +46,11 @@ CPI_PL_WE$time <- as.Date(CPI_PL_WE$time)
 CPI_PL_WE <- CPI_PL_WE %>% arrange(time, geo)
 
 #Przeksztalcenie values - ze zmiennej factor na numeryczne:
-#Uwaga - tu trzeba  factor przeksztalcic na character i dopiero potem na numeric
+#Uwaga - tu trzeba factor przeksztalcic na character i dopiero potem na numeric
 CPI_PL_WE<- CPI_PL_WE %>% mutate(value = as.numeric(as.character(values))) %>%
   select(-values)
 
-#Utworzenie Zmiennych pomocnicznych okreslajacych poczatek i koniec szeregu czasowego 
+#Utworzenie zmiennych pomocnicznych okreslajacych poczatek i koniec szeregu czasowego 
 MinMaxDate <- CPI_PL_WE %>% group_by(geo)%>% 
   summarize(Begin = min(time), Ends = max(time))
 
@@ -221,8 +183,8 @@ summary(KPSS_sdlCPI)
 
 
 
-###Wyniki moga byc zanburzone przez potencjalnie wystapujaca sezonowosc
-#Dlatego tez warto przeprowadzic testy pierwiastka jednostkowego uwzgledniajace
+###Wyniki moga byc zaburzone przez potencjalnie wystapujaca sezonowosc
+#Dlatego tez warto przeprowadzic testy pierwiastka jednostkowego uwzgledniajace to
 # np. Canova and Hansen (CH) test
 
 #ch.test(x, type = c("dummy", "trigonometric"), lag1 = FALSE, NW.order = NULL,
@@ -406,7 +368,7 @@ lnCPI_D = log(CPI_D)
 dlnCPI_D = diff(lnCPI_D,lag=1)
 sdlnCPI_D = diff(lnCPI_D, lag=12)
 
-###DAne
+###Dane
 
 CPI_FR <- CPI_PL_WE4 %>% filter(geo == "FR")
 MM_FR <- MinMaxDate2 %>% filter(geo =="FR") %>% select(-c(YB,MB))
@@ -426,7 +388,7 @@ dCPI <- cbind(dlnCPI_D,dlnCPI_F, dlnCPI_P)
 
 
 
-#Model VAR - z wykorzystaniem pakietu VAR  
+#Model VAR (vector autoregressive) - z wykorzystaniem pakietu vars  
 #
 #VAR(y, p = 1, type = c("const", "trend", "both", "none"),
   #  season = NULL, exogen = NULL, lag.max = NULL,
@@ -460,7 +422,7 @@ PredsdCPI  <- predict(VARSdCPI , n.ahead = 24)
 ###Wizualizacja: Time Series plots of VAR forecasts with differently shaded confidence regions (fanchart) for each endogenous variable.
 
 
-#f#anchart(x, colors = NULL, cis = NULL, names = NULL, main = NULL, ylab =
+#fanchart(x, colors = NULL, cis = NULL, names = NULL, main = NULL, ylab =
  #          NULL, xlab = NULL, col.y = NULL, nc, plot.type = c("multiple",
   #                                                            "single"), mar = par("mar"), oma = par("oma"), ... )
 
@@ -476,4 +438,33 @@ fanchart(PredsdCPI)
 
 
 
+#Pakiet do bezposredniego sciagania danych z Eurostatu  - Dane zostaly sciagniete za posrednictwem tego pakiety 
+#library(eurostat)
+
+###Kod do bezposredniego sciagniecia danych z Eurostatu:  
+#Nie bedzie wykonywany na zajeciach (chyba, ze na sam koniec by pokazac jak to fukcjonuje)
+###Sharmonizowany indeks cen konsumenta (HICP)
+#Wykaz wszystkich baz danych Eurostatu w które maja w swojej nazwie HCIP 
+#
+#HICP = search_eurostat(pattern="HICP")
+#
+#Sciagniecie calej bazy danych dla HICP
+#
+#HICP_all <- get_eurostat(as.character("prc_hicp_midx"))
+#
+#
+#####Selekcja jedynie indeksów dla wszystkich dóbr (coicop CP00) dla 2005=100 (unit "I05")
+#Generalnie po kodach COCIOP mozna wybrac indeksy dla bardziej szczególowych kategorii dóbr. 
+#
+#HICP_total <- HICP_all %>% dplyr::filter(coicop =="CP00"& unit == "I05")
+#
+### Wybór indeksu HICP dla wszystkich dórb jedynie dla Polski
+#
+#HICP_PL <- HICP_total%>% filter(geo =="PL")
+#
+#Wybór indeksu HICP dla Polski, Niemiec i Francji 
+#HICP_PL_WE <- HICP_total%>% dplyr::filter(geo =="PL" | geo == "DE"|geo == "FR")
+#
+#
+#write.csv(HICP_PL_WE, "HICP_PL_WE.csv")
 
