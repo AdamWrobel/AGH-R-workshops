@@ -38,7 +38,7 @@ Materials for R workshops hosted by UBS and KNMF (AGH)
 
 19.04.2018, 19:00 (czwartek)
 
-#### Time Series modelling [PL - Adrian]
+#### Time Series modelling [PL - Adrian / Adam]
 
 24.04.2018, 19:15 (wtorek)
 
