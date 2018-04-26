@@ -20,11 +20,6 @@ library(forecast)
 ###Pakiet do modeli VAR
 library(vars)
 
-##### 
-library(tseries)
-library(timeSeries)
-library(PerformanceAnalytics)
-
 
 ###Sciagniacie danych potrzebnych do analizy  - Wskaznik cen konsumenta HICP z Eurostatu dla Polski, Niemec i Francji
 CPI_PL_WE <- read.csv2("https://raw.githubusercontent.com/AdamWrobel/AGH-R-workshops/master/6_Time_series/HICP_PL_WE.csv",sep=",")
@@ -64,7 +59,8 @@ MinMaxDate2 <- MinMaxDate %>% group_by(geo)%>%
 
 
 
-##Zlaczenie zbiorów MinMAxDate2 i CPI_PL_WE  tak aby latwo utworzyc zmienne klasy time series  
+##Zlaczenie zbiorów MinMAxDate2 i CPI_PL_WE 
+## tak aby latwo utworzyc zmienne klasy time series  
 
 CPI_PL_WE2 <- full_join(CPI_PL_WE, MinMaxDate2)
 
@@ -77,8 +73,10 @@ ggplot(CPI_PL_WE2, aes(x=time,y=value, color=geo))+geom_line() +
   xlab("lata")+ylab("2005=100") +
   ggtitle("Sharmonizowany indeks cen konsumenta (HICP) \n dla Polski, Niemiec i Francji") 
 
-#Zadanie nr 1 - > Przedstaw na wykresie dane od roku 2000,  przy przeksztlceniu indeksu jednopodstawowego, tak, ze, ze 01_2000 = 100  
-#Tu jest miejsce na Twoje rozwiazanie !
+# Zadanie nr 1 - > Przedstaw na wykresie dane od roku 2000,  
+# przy przeksztalceniu indeksu jednopodstawowego, tak ze w 
+# styczniu 2000 indeks ma wartosc100  
+# Tu jest miejsce na Twoje rozwiazanie !
 #
 #
 #
@@ -149,9 +147,10 @@ plot(dlnCPI_P)
 plot(sdlnCPI_P)
 
 ### Analiza wlasciwosci szeregów    
-#Analiza stacjonarnosci test ADF,  wariant ze stala i metoda selekcji opóznienie - kryterium akaike
+#Analiza stacjonarnosci test ADF, wariant ze stala i metoda selekcji opóznienie - kryterium akaike
 #domyslnie liczba lags ustalona przez uzytkownika
 #Tutaj wybieramy liczbe opóznien za pmoca kryterium AIC
+# h0 - bladzenie losowe -> niestacjonarny
 ADF_CPI <- ur.df(CPI_P, type="drift",lags=18,selectlags="AIC")
 ADF_lCPI <- ur.df(lnCPI_P, type="drift", lags =18,selectlags="AIC")
 ADF_dlCPI <- ur.df(dlnCPI_P, type="drift",lags= 18,selectlags="AIC")
@@ -169,7 +168,7 @@ summary(ADF_sdlCPI)
 #faworyzuje hipoteze zerowa o wystepowaniu pierwiastka jednostkowego 
 
 #Test KPSS - wariant ze stala (jest jeszcze mozliwy ze srednia)
-
+# h0 - stacjonarnosc
 KPSS_CPI <- ur.kpss(CPI_P, type="mu",lags="short")
 KPSS_lCPI <- ur.kpss(lnCPI_P, type="mu",lags="short")
 KPSS_dlCPI <- ur.kpss(dlnCPI_P, type="mu",lags="short")
@@ -197,7 +196,7 @@ summary(KPSS_sdlCPI)
 #By default all the individual and joint test statistics are returned.
 
 #Tu testyjemy sezonowosc miesieczna 
-
+# h0 - proces stacjonarny
 ch.test(dlnCPI_P, type = "dummy", sid = 12)
 ch.test(lnCPI_P, type = "dummy", sid = 12)
 
@@ -221,18 +220,23 @@ pacf(sdlnCPI_P)
 
 
 
-#Model AR(1,0,0)
-arima(lnCPI_P, order=c(1,0,0))
+#Model AR(1) / ARIMA(1,0,0)
+AR1 <- arima(lnCPI_P, order=c(1,0,0))
+AR1 %>% forecast %>% plot
 
-#Model AR(1,1,0)
-arima(lnCPI_P, order=c(1,1,0),include.mean = TRUE)
+#Model ARIMA(1,1,0)
+ARIMA110 <- arima(lnCPI_P, order=c(1,1,0),include.mean = TRUE)
+ARIMA110 %>% forecast %>% plot
 
-#Model AR(1,0,0) dla przyrostów i sezonowych przyrostów
-arima(dlnCPI_P, order=c(1,0,0))
-arima(sdlnCPI_P, order=c(1,0,0))
+#Model ARIMA(1,0,0) dla przyrostów i sezonowych przyrostów
+AR1_d <- arima(dlnCPI_P, order=c(1,0,0))
+AR1_d %>% forecast %>% plot
+AR1_s <- arima(sdlnCPI_P, order=c(1,0,0))
+AR1_s %>% forecast %>% plot
 
 #Model z sezonowymi komponentatmi (SARIMA(1,0,0), (1,0,0))
-arima(dlnCPI_P, order=c(1,0,0),seasonal = list(order = c(1, 0, 0)))
+AR1_sesonal <- arima(dlnCPI_P, order=c(1,0,0),seasonal = list(order = c(1, 0, 0)))
+AR1_sesonal %>% forecast %>% plot
 
 Arima1_dCPI <- arima(dlnCPI_P, order=c(1,0,0))
  
@@ -240,25 +244,6 @@ plot(Arima1_dCPI$residuals)
 pacf(Arima1_dCPI$residuals)
 
 
-
-
-SARIMA1_dCPI <-arima(dlnCPI_P, order=c(1,0,0),seasonal = list(order = c(1, 0, 0)))
-plot(SARIMA1_dCPI$residuals)
-pacf(SARIMA1_dCPI$residuals)
-
-
-
-
-ForecastAR1 <- forecast(Arima1_dCPI)
-plot(ForecastAR1$mean)
-
-
-ForecastSAR1 <- forecast(SARIMA1_dCPI)
-plot(ForecastSAR1$mean)
-#
-#
-#
-#
 #
 #
 ###Automayczna selekcja modeli - wykorzystanie funkcji auto.arima z pakietu forecast 
@@ -276,65 +261,14 @@ plot(ForecastSAR1$mean)
 #
 
 AutoArima <- auto.arima(dlnCPI_P)
-forecast(AutoArima)
-
-
-ForecastAuto <- forecast(AutoArima)
-plot(ForecastAuto$mean)
-
+AutoArima %>% forecast %>% plot
 
 
 #Zadanie
-#A) Sporzadzenie wykresu prognoz punktówych przeksztalconych do CPI: 
+#A) Stworz wykres poziomow CPI dla modeli AR1_sesonal i AutoArima
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#Proponowane rozwiazanie 
-#
-#
-#
-dCPI_Forecast = cbind(ForecastAR1$mean, ForecastAuto$mean, ForecastSAR1$mean)
 
-ln_CPIForecastP = cbind(lnCPI_P, lnCPI_P, lnCPI_P)
 
-Zeros = matrix( rep(0,nrow(dCPI_Forecast)),ncol=1)
-
-ZeroTserie = ts(Zeros, start=c(2018,4), end=c(2020, 3),frequency=12)
-
-ZeroTseries = cbind(ZeroTserie, ZeroTserie, ZeroTserie)
-colnames(ZeroTseries)<-colnames(dCPI_Forecast)
-
-ZeroTseries[1,]=ln_CPIForecastP[nrow(ln_CPIForecastP),]+dCPI_Forecast[1,]
-
-for(i in 2:nrow(dCPI_Forecast)){
-  ZeroTseries2=ZeroTseries
-  ZeroTseries[i,]=ZeroTseries2[i-1,]+dCPI_Forecast[i,]
-}
-
-##Zbiór danych przeksztalcony do CPI 
-ForecastCPI = exp(ZeroTseries)   
-
-#Wykres - na jednym wykresie 
-plot(ForecastCPI, plot.type="m")
-#
-#
-#
-#
-#
-#
 #
 #Wielowymiarowa analiza szeregów czasowych
 #
@@ -398,15 +332,15 @@ dCPI <- cbind(dlnCPI_D,dlnCPI_F, dlnCPI_P)
 
 VARdCPI <- VAR(dCPI, p=12, type = "const", season=12, lag.max=18, ic="AIC")
 summary(VARdCPI)
-
+plot(VARdCPI)
 
 VARSdCPI <- VAR(SdCPI,  type = "const",lag.max=12, ic="AIC")
 summary(VARSdCPI)
-
+plot(VARSdCPI)
 
 ######Funkcje reakcji na impulse (impulseresponsefunctions)
 ####
-irfdCPI <- irf(VARdCPI, n.ahead=40, runs=1000)
+irfdCPI <- irf(VARdCPI, n.ahead=10, runs=1000)
 plot(irfdCPI)
 
 
@@ -429,8 +363,6 @@ PredsdCPI  <- predict(VARSdCPI , n.ahead = 24)
 plot(PreddCPI)
 
 plot(PredsdCPI)
-
-
 
 fanchart(PreddCPI)
 
