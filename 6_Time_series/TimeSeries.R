@@ -1,24 +1,26 @@
 
 #Time series 
-#Laadowanie potrzebnych bibliotek 
+#Ladowanie potrzebnych bibliotek 
 
 library(dplyr)
 library(ggplot2)
 
 ### Pakiet do analizy kointegracji i diagnostyki szeregow czasowych 
-install.packages(urca)
+install.packages('urca')
 library(urca)
 
-###Pakiet do diagnostyki seasonal unit roots
-install.packages(uroot)
+###Pakiet do diagnostyki seasonal unit roots (stacjonarnosc szeregow)
+install.packages('uroot')
 library(uroot)
 
 ####Pakiet przydatny do konstukcji modeli ARIMA oraz do prognozowania i diagnostyki prognoz 
-install.packages(forecast)
+install.packages("forecast")
 library(forecast)
 
-###Pakiet do modeli VAR
+###Pakiet do modeli VAR (vector autoregressive)
+install.packages('vars')
 library(vars)
+
 
 
 ###Sciagniacie danych potrzebnych do analizy  - Wskaznik cen konsumenta HICP z Eurostatu dla Polski, Niemec i Francji
@@ -38,7 +40,7 @@ CPI_PL_WE$time <- as.Date(CPI_PL_WE$time)
 
 #Drugi krok to sortowanie danych po czasie, a nastepnie po 
 #zmiennej "geo" okreslajacych ksztalt 
-CPI_PL_WE <- CPI_PL_WE %>% arrange(time, geo)
+CPI_PL_WE <- CPI_PL_WE %>% arrange(time) %>% arrange(geo)
 
 #Przeksztalcenie values - ze zmiennej factor na numeryczne:
 #Uwaga - tu trzeba factor przeksztalcic na character i dopiero potem na numeric
@@ -69,7 +71,7 @@ CPI_PL_WE2 <- full_join(CPI_PL_WE, MinMaxDate2)
 head(CPI_PL_WE2)
 
 ####Wykres liniowy szeregów czasowych
-ggplot(CPI_PL_WE2, aes(x=time,y=value, color=geo))+geom_line() +
+ggplot(CPI_PL_WE2, aes(x=time,y=value, color=geo))+geom_line(lwd = 1.2) +
   xlab("lata")+ylab("2005=100") +
   ggtitle("Sharmonizowany indeks cen konsumenta (HICP) \n dla Polski, Niemiec i Francji") 
 
