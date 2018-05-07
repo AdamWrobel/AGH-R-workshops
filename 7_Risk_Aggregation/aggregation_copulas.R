@@ -1,8 +1,4 @@
 
-library(Matrix);library(CDVine)
-
-
-
 ##########################################
 ## Intrduction to the concept of Copula ## 
 ##########################################
@@ -21,7 +17,7 @@ plot(density(normal_distibutions[,1]))
 linear_correlation =0.4
 
 # inputing it into correlation matrix as in multivariat distibution
-cor_matrix <- Matrix(linear_correlation,3,3, sparse = TRUE)
+cor_matrix <- matrix(linear_correlation,3,3)
 diag(cor_matrix) <- 1
 cor_matrix
 
@@ -71,6 +67,10 @@ uniform_IR_1 <- risk_drivers_trans %>% select(YR1_log_return) %>% pghyp(YR1_NIG)
 uniform_WIG <- risk_drivers_trans %>% select(WIG_log_return) %>% pghyp(EQ_WIG_NIG)
 hist(uniform_IR_1) # since we are transforming empirical data - it will be as good as our distibution fitting
 hist(uniform_WIG)
+
+
+install.packages('CDVine')
+library(CDVine)
 
 # selecting most appropriate copula based on AIC criterion
 (fitted_copula <- BiCopSelect(u1 = uniform_IR_1,u2 = uniform_WIG))
