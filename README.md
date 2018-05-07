@@ -28,7 +28,7 @@ Materials for R workshops hosted by UBS and KNMF (AGH)
 05.04.2018, 19:00
 
 
-## R workshops - advanced (list of initial topics - to be confirmed):
+## R workshops - advanced:
 
 17.04.2018, 18:30 - eRka meetup (https://www.meetup.com/erkakrakow/events/249289013/)
 
@@ -52,7 +52,6 @@ Materials for R workshops hosted by UBS and KNMF (AGH)
 
 #### Market Risk - VAR model [ENG - Michael]
 
-15.05.2018, 19:15
+15.05.2018, 19:15 (wtorek)
 
-17.05.2018, 19:00
-
+17.05.2018, 19:00 (czwartek)
