@@ -46,6 +46,14 @@ P1 %>% table
 
 
 
+# qnorm - inverse of cdf
+sequence <- seq(from=0, to =1, by = 0.005)
+qnorm(sequence) %>% density %>% plot
+
+sequence %>% hist
+pnorm(qnorm(sequence)) %>% hist
+
+
 
 # normal inverse gaussian distibution
 # install.packages('ghyp')
