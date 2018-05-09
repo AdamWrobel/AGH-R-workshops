@@ -1,8 +1,8 @@
 
-
+Some reference materials about copulas:
 U. Schepsmeier, E. C. Brechmann, Modeling dependence with C- and D-vine copulas: The R package CDVine, 2013
-U. Schepsmeier, E. C. Brechmann, CDVine, 2013https://cran.r-project.org/web/packages/CDVine/
-H. Joe, Dependence Modeling with Copulas, 2014(not yet published on CRAN package CopulaModel - copula.stat.ubc.ca)
+U. Schepsmeier, E. C. Brechmann, CDVine, 2013 https://cran.r-project.org/web/packages/CDVine/
+H. Joe, Dependence Modeling with Copulas, 2014
 C. Genest, A.-C. Favre, Everything You Always Wanted to Know about Copula but Were Afraid to Ask, 2007
 H. Joe, H. Li, A. K. Nikoloulopoulos, Tail dependence functions and vine copulas, 2010
-M. Hofer, M.Machler, Nested Archimedean Copulas Meet R – Vignette,https://cran.r-project.org/web/packages/copula/vignettes/nacopula-pkg.pdf
+M. Hofer, M.Machler, Nested Archimedean Copulas Meet R – Vignette, https://cran.r-project.org/web/packages/copula/vignettes/nacopula-pkg.pdf
