@@ -54,4 +54,4 @@ Materials for R workshops hosted by UBS and KNMF (AGH)
 
 15.05.2018, 19:15 (wtorek)
 
-17.05.2018, 19:00 (czwartek)
+17.05.2018, 19:00 (czwartek) - połączone z zajęciami wtorkowymi
